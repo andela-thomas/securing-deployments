@@ -1,0 +1,18 @@
+---
+# tasks file for provision
+
+- name: Update the system
+  apt: update_cache=yes
+  tags:
+    - provision
+
+- name: create aws config folder
+  file: path=.aws state=directory mode=0755
+  tags:
+    - provision
+
+- name: install git
+  apt: name=git state=present
+
+- name: configure aws credentials
+  template: src=credentials.j2 dest=.aws/credentials mode=0644

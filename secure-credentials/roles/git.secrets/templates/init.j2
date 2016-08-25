@@ -1,0 +1,41 @@
+#!/bin/bash
+set -ex
+
+# echo "First arg: $1"
+# echo "Second arg: $2"
+
+
+if [ -z "$1" ]; then
+    echo "=================================================================="
+    echo "No argument supplied, Please add the repository you want to secure"
+    echo "=================================================================="
+    exit 1
+fi
+
+REPOSITORY=$1
+
+echo REPOSITORY
+# CHECK IF THE FOLDER EXIST AND CREATE IT
+
+if [ ! -d "$REPOSITORY" ]; then
+  mkdir ${REPOSITORY}
+fi
+
+# CHANGE DIRECTORY
+cd $REPOSITORY
+
+# MAKE THE FOLDER A GIT REPOSITORY If NOT ONE
+if [ ! -d ".git" ]; then
+  git init
+fi
+
+# INSTALL GIT SECRETS
+git secrets --install
+git secrets --register-aws
+
+echo "==================================================="
+echo "============== INSTALLATION COMPELETE ============="
+echo "================ HAPPY CODING ====================="
+echo "==================================================="
+
+exit 0

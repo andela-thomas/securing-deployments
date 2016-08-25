@@ -1,0 +1,13 @@
+---
+- name: clone git secrets
+  git: repo=https://github.com/awslabs/git-secrets.git clone=yes dest={{ ansible_env.PWD}}/git-secrets
+  tags:
+    -clone
+
+- name: install git secrets
+  command: chdir=git-secrets make install
+  tags:
+    - install
+
+- name: copy init bash script to the server
+  template: src=init.j2 dest={{ansible_env.PWD}}/init.sh mode=0755
